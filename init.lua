@@ -162,6 +162,7 @@ vim.opt.spell = true
 --  See `:help vim.keymap.set()`
 
 -- My own keymaps
+-- open Neotree
 vim.keymap.set('n', '<leader>o', '<cmd>Neotree<CR>', { desc = '[O]pen NeoTree' })
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode

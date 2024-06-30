@@ -6,4 +6,6 @@
 return {
   -- Does what it says.
   { 'tzachar/highlight-undo.nvim', opts = {} },
+  -- great rust tool
+  { 'simrat39/rust-tools.nvim', opts = {} },
 }

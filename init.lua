@@ -240,6 +240,33 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- My own Plugin additions
   --
+  -- Scala metals start
+  {
+    'scalameta/nvim-metals',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    ft = { 'scala', 'sbt', 'java' },
+    opts = function()
+      local metals_config = require('metals').bare_config()
+      metals_config.on_attach = function(client, bufnr)
+        -- your on_attach function
+      end
+
+      return metals_config
+    end,
+    config = function(self, metals_config)
+      local nvim_metals_group = vim.api.nvim_create_augroup('nvim-metals', { clear = true })
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = self.ft,
+        callback = function()
+          require('metals').initialize_or_attach(metals_config)
+        end,
+        group = nvim_metals_group,
+      })
+    end,
+  },
+  -- Scala metals end
   --
   --
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
@@ -622,8 +649,10 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
-        -- rust_analyzer = {},
+        rust_analyzer = {},
         nil_ls = {},
+        pylsp = {},
+        -- did not work jet mypy = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -715,7 +744,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'isort', 'black' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },

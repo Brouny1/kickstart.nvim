@@ -651,6 +651,7 @@ require('lazy').setup({
         -- pyright = {},
         rust_analyzer = {},
         nil_ls = {},
+
         pylsp = {},
         -- did not work jet mypy = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs

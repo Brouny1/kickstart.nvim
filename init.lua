@@ -160,6 +160,9 @@ vim.opt.scrolloff = 10
 vim.opt.spelllang = 'en_us,de_de'
 vim.opt.spell = true
 
+-- folding
+vim.opt.foldmethod = 'marker'
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 

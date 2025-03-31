@@ -73,6 +73,10 @@ too - it's ignored in the kickstart repo to make maintenance easier, but it's
 ```sh
 git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 ```
+Use this for private repo
+```sh
+git clone https://github.com/Brouny1/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+```
 
 </details>
 

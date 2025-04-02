@@ -797,7 +797,9 @@ require('lazy').setup(
         -- See `:help cmp`
         local cmp = require 'cmp'
         local luasnip = require 'luasnip'
-        luasnip.config.setup {}
+        luasnip.config.setup { enable_autosnippets = true, store_selection_keys = '<Tab>' }
+
+        require('luasnip.loaders.from_lua').load { paths = { '~/.config/nvim/my-luasnippets/' } }
 
         cmp.setup {
           snippet = {
@@ -942,6 +944,7 @@ require('lazy').setup(
         auto_install = true,
         highlight = {
           enable = true,
+          disable = { 'latex' },
           -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
           --  If you are experiencing weird indenting issues, add the language to
           --  the list of additional_vim_regex_highlighting and disabled languages for indent.

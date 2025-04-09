@@ -753,6 +753,7 @@ require('lazy').setup(
           nix = { 'alejandra' },
 
           c = { 'clang-format' },
+          tex = { 'tex-fmt' },
         },
       },
     },

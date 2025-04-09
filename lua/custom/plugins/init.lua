@@ -46,7 +46,18 @@ return {
     init = function()
       -- VimTeX configuration goes here, e.g.
       vim.g.vimtex_view_method = 'zathura'
+      vim.g.vimtex_imaps_enabled = false
+      vim.opt.conceallevel = 2
+      vim.g.vimtex_syntax_conceal = { math_bounds = 0 }
     end,
   },
   -- }}}
+
+  {
+    '3rd/image.nvim',
+    build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
+    opts = {
+      processor = 'magick_cli',
+    },
+  },
 }

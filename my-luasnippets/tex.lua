@@ -1,3 +1,4 @@
+-- local variables and functions {{{
 local ls = require 'luasnip'
 local s = ls.snippet
 local sn = ls.snippet_node
@@ -26,7 +27,9 @@ local parse = require('luasnip.util.parser').parse_snippet
 local ms = ls.multi_snippet
 local k = require('luasnip.nodes.key_indexer').new_key
 
--- used to surround text
+-- }}}
+
+-- used to surround text {{{
 local get_visual = function(args, parent)
   if #parent.snippet.env.LS_SELECT_RAW > 0 then
     return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
@@ -34,6 +37,37 @@ local get_visual = function(args, parent)
     return sn(nil, i(1))
   end
 end
+--- }}}
+
+-- Some LaTeX-specific conditional expansion functions (requires VimTeX) {{{
+
+local tex_utils = {}
+tex_utils.in_mathzone = function() -- math context detection
+  return vim.fn['vimtex#syntax#in_mathzone']() == 1
+end
+
+tex_utils.in_text = function()
+  return not tex_utils.in_mathzone()
+end
+
+tex_utils.in_comment = function() -- comment detection
+  return vim.fn['vimtex#syntax#in_comment']() == 1
+end
+
+tex_utils.in_env = function(name) -- generic environment detection
+  local is_inside = vim.fn['vimtex#env#is_inside'](name)
+  return (is_inside[1] > 0 and is_inside[2] > 0)
+end
+
+-- A few concrete environments---adapt as needed
+tex_utils.in_equation = function() -- equation environment detection
+  return tex_utils.in_env 'equation'
+end
+tex_utils.in_itemize = function() -- itemize environment detection
+  return tex_utils.in_env 'itemize'
+end
+
+-- }}}
 
 return {
 
@@ -42,7 +76,97 @@ return {
 
   -- To return multiple snippets, use one `return` statement per snippet file
   -- and return a table of Lua snippets.
-  s({ trig = 'foo' }, { t 'Another snippet.' }),
 
-  s({ trig = 'ff', snippetType = 'autosnippet' }, { t '\\frac{', d(1, get_visual), t '}{', i(2), t '}' }),
+  -- # In Math mode {{{
+
+  -- frac{}{}
+  s({ trig = 'ff', snippetType = 'autosnippet' }, { t '\\frac{', d(1, get_visual), t '}{', i(2), t '}' }, { condition = tex_utils.in_mathzone }),
+
+  -- \text{}
+  s({ trig = '"', snippetType = 'autosnippet' }, fmta('\\text{<>}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  --}}}
+
+  -- In text {{{
+  -- documentclass
+  s({ trig = 'documentclass', desc = 'documentclass' }, fmta('\\documentclass[<>]{<>}', { i(1, 'options'), i(2, 'class') }), { condition = tex_utils.in_text }),
+
+  -- bein / end environment {{{
+
+  -- generic begin / end environment {{{
+  s(
+    { trig = 'begin' },
+    fmta(
+      [[
+  \begin{<>}
+    <>
+  \end{<>}
+  ]],
+      { i(1), d(2, get_visual), rep(1) }
+    )
+  ),
+  -- generic begin / end environment }}}
+
+  -- document begin / end environment {{{
+  s(
+    { trig = 'document', desc = [[
+  \begin{docuemnt}
+    <>
+  \end{document}
+  ]] },
+    fmta(
+      [[
+      \begin{document}
+        <>
+      \end{document}
+      ]],
+      d(0, get_visual)
+    ),
+    { condition = tex_utils.in_text }
+  ),
+
+  -- document begin / end environment }}}
+
+  -- itemize begin / end environment {{{
+  s(
+    { trig = 'itemize', desc = [[
+  \begin{itemize}
+    \item <>
+  \end{itemize}
+  ]] },
+    fmta(
+      [[
+      \begin{itemize}
+        \item <>
+      \end{itemize}
+      ]],
+      d(1, get_visual)
+    ),
+    { condition = tex_utils.in_text }
+  ),
+
+  -- itemize begin / end environment }}}
+
+  -- enumerate begin / end environment {{{
+  s(
+    { trig = 'enumerate', desc = [[
+  \begin{enumerate}
+    \item <>
+  \end{enumerate}
+  ]] },
+    fmta(
+      [[
+      \begin{enumerate}
+        \item <>
+      \end{enumerate}
+      ]],
+      d(1, get_visual)
+    ),
+    { condition = tex_utils.in_text }
+  ),
+
+  -- itemize begin / end environment }}}
+
+  -- bein / end environment}}}
+
+  -- }}}
 }

@@ -1,3 +1,4 @@
+-- vim:foldmethod=marker
 -- local variables and functions {{{
 local ls = require 'luasnip'
 local s = ls.snippet
@@ -71,26 +72,81 @@ end
 
 return {
 
-  -- A snippet that expands the trigger "hi" into the string "Hello, world!".
-  s({ trig = 'hi', snippetType = 'autosnippet' }, { t 'Hello, world!' }),
-
   -- To return multiple snippets, use one `return` statement per snippet file
   -- and return a table of Lua snippets.
 
-  -- # In Math mode {{{
+  -- Preamble {{{
 
-  -- frac{}{}
+  -- documentclass {{{
+  s({ trig = 'documentclass', desc = 'documentclass' }, fmta('\\documentclass[<>]{<>}', { i(1, 'options'), i(2, 'class') })),
+  -- docuemntclass }}}
+
+  -- usepackage {{{
+  s({ trig = 'usepackage', desc = 'usepackage' }, fmta('\\usepackage[<>]{<>}', { i(1, 'options'), i(2, 'package') })),
+  -- usepackage }}}
+
+  -- newtheorem {{{
+  s({ trig = 'newtheorem', desc = 'used for creating a new theorem' }, fmta('\\newtheorem{<>}{<>}', { i(1, 'name'), i(2, 'Display name') })),
+  -- newtheorem }}}
+
+  -- theoremstyle {{{
+  s({ trig = 'theoremstyle', desc = 'set theorem style' }, fmta('\\theoremstyle{<>}', { i(1) })),
+  -- theoremstyle }}}
+
+  -- Preamble }}}
+
+  -- autosnippets {{{
+
+  -- In Math mode {{{
+
+  -- frac{}{} {{{
   s({ trig = 'ff', snippetType = 'autosnippet' }, { t '\\frac{', d(1, get_visual), t '}{', i(2), t '}' }, { condition = tex_utils.in_mathzone }),
+  -- frac{}{} }}}
 
-  -- \text{}
+  -- \text{} {{{
   s({ trig = '"', snippetType = 'autosnippet' }, fmta('\\text{<>}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
-  --}}}
+  -- \text{} }}}
+
+  -- fonts {{{
+  s(
+    { trig = 'rm', desc = 'font used for functions like sin or cos', snippetType = 'autosnippet' },
+    fmta('\\mathrm{<>}', { d(1, get_visual) }),
+    { condition = tex_utils.in_mathzone }
+  ),
+
+  s({ trig = 'bf', desc = 'bold font', snippetType = 'autosnippet' }, fmta('\\mathbf{<>}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+
+  s({ trig = 'it', desc = 'italics', snippetType = 'autosnippet' }, fmta('\\mathit{<>}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+
+  s({ trig = 'cal', desc = 'fancy font', snippetType = 'autosnippet' }, fmta('\\mathcal{<>}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+
+  s({ trig = 'bb', desc = 'blackboard bold', snippetType = 'autosnippet' }, fmta('\\mathbb{<>}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+
+  s(
+    { trig = 'tt', desc = 'teletype (monospace font)', snippetType = 'autosnippet' },
+    fmta('\\mathtt{<>}', { d(1, get_visual) }),
+    { condition = tex_utils.in_mathzone }
+  ),
+  -- fonts }}}
+
+  -- In Math mode }}}
 
   -- In text {{{
-  -- documentclass
-  s({ trig = 'documentclass', desc = 'documentclass' }, fmta('\\documentclass[<>]{<>}', { i(1, 'options'), i(2, 'class') }), { condition = tex_utils.in_text }),
+  --
+  -- fonts {{{
 
-  -- bein / end environment {{{
+  s({ trig = 'bf', desc = 'bold font' }, fmta('\\textbf{<>}', { d(1, get_visual) })),
+
+  s({ trig = 'it', desc = 'italics' }, fmta('\\textit{<>}', { d(1, get_visual) })),
+
+  s({ trig = 'tt', desc = 'teletype (monospace font)' }, fmta('\\texttt{<>}', { d(1, get_visual) })),
+  -- fonts }}}
+
+  -- In text }}}
+
+  -- autosnippet }}}
+
+  -- begin / end environments {{{
 
   -- generic begin / end environment {{{
   s(
@@ -119,9 +175,8 @@ return {
         <>
       \end{document}
       ]],
-      d(0, get_visual)
-    ),
-    { condition = tex_utils.in_text }
+      d(1, get_visual)
+    )
   ),
 
   -- document begin / end environment }}}
@@ -140,8 +195,7 @@ return {
       \end{itemize}
       ]],
       d(1, get_visual)
-    ),
-    { condition = tex_utils.in_text }
+    )
   ),
 
   -- itemize begin / end environment }}}
@@ -160,13 +214,79 @@ return {
       \end{enumerate}
       ]],
       d(1, get_visual)
+    )
+  ),
+  -- enumerate begin / end environment }}}
+
+  -- equation begin /end environment {{{
+  s(
+    { trig = 'equation', desc = [[
+  \begin{equation}
+    <>
+  \end{equation}
+  ]] },
+    fmta(
+      [[
+      \begin{equation}
+        <>
+      \end{equation}
+      ]],
+      d(1, get_visual)
+    )
+  ),
+
+  -- equation begin /end environment }}}
+
+  -- begin{split} {{{
+  s(
+    { trig = 'split', desc = [[
+  \begin{split}
+    <>
+  \end{split}
+  ]] },
+    fmta(
+      [[
+  \begin{split}
+    <>
+  \end{split}
+  ]],
+      d(1, get_visual)
+    )
+  ),
+  -- end{split} }}}
+
+  -- other language {{{
+  s(
+    { trig = 'other language', desc = 'use rules for a different language' },
+    fmta(
+      [[
+  \begin{other language}{<>}
+    <>
+  \end{other language}
+  ]],
+      {
+        i(1, 'english|ngerman'),
+        d(2, get_visual),
+      }
+    )
+  ),
+  -- other language }}}
+
+  -- begin / end environments }}}
+
+  -- create math environment {{{
+  s({ trig = 'll', snippetType = 'autosnippet', desc = 'in-line' }, fmta('\\(<>\\)', d(1, get_visual)), { condition = tex_utils.in_text }),
+  s(
+    { trig = 'mm', snippetType = 'autosnippet', desc = 'multi-line' },
+    fmta(
+      [[
+  \[
+    <>
+  \]
+      ]],
+      d(1, get_visual)
     ),
     { condition = tex_utils.in_text }
   ),
-
-  -- itemize begin / end environment }}}
-
-  -- bein / end environment}}}
-
-  -- }}}
+  -- create math environment }}}
 }

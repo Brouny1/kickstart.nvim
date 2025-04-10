@@ -1,3 +1,4 @@
+-- vim:foldmethod=marker
 ---
 --- {{{
 --[[
@@ -165,7 +166,12 @@ vim.opt.spelllang = 'en_us,de_de'
 vim.opt.spell = true
 
 -- folding
-vim.opt.foldmethod = 'marker'
+-- note needed, because i can add "vim:foldmethod=marker" to start of document
+-- vim.opt.foldmethod = 'marker'
+
+-- modeline
+-- is on by default, but not for root. Might be a security issue.
+vim.opt.modeline = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`

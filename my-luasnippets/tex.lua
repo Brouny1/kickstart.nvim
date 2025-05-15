@@ -95,16 +95,22 @@ return {
 
   -- Preamble }}}
 
-  -- autosnippets {{{
-
   -- In Math mode {{{
 
-  -- frac{}{} {{{
+  -- frac{}{} and sqrt[n]{} {{{
   s({ trig = 'ff', snippetType = 'autosnippet' }, { t '\\frac{', d(1, get_visual), t '}{', i(2), t '}' }, { condition = tex_utils.in_mathzone }),
-  -- frac{}{} }}}
+  s({ trig = 'sq', snippetType = 'autosnippet' }, fmta('\\sqrt[<>]{<>}', { i(1, 'n'), d(2, get_visual) }), { condition = tex_utils.in_mathzone }),
+  -- frac{}{} and sqrt[n]{} }}}
+
+  -- Funktionen {{{
+  s({ trig = 'mod', snippetType = 'autosnippet' }, { t '\\mod' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = 'sin', desc = 'sin', snippetType = 'autosnippet' }, fmta('\\sin(<>)', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = 'cos', desc = 'cos', snippetType = 'autosnippet' }, fmta('\\cos(<>)', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = 'log', desc = 'log', snippetType = 'autosnippet' }, fmta('\\log(<>)', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  -- Funktionen}}}
 
   -- \text{} {{{
-  s({ trig = '"', snippetType = 'autosnippet' }, fmta('\\text{<>}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = '""', snippetType = 'autosnippet' }, fmta('\\text{<>}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   -- \text{} }}}
 
   -- fonts {{{
@@ -129,21 +135,61 @@ return {
   ),
   -- fonts }}}
 
+  -- dots {{{
+  s({ trig = '...', snippetType = 'autosnippet' }, { t '\\dots' }, { condition = tex_utils.in_mathzone }),
+  -- dots }}}
+
+  -- cdots{{{
+  s({ trig = 'cdot', snippetType = 'autosnippet' }, { t '\\cdot' }, { condition = tex_utils.in_mathzone }),
+  -- cdots}}}
+
+  -- FZ Notation und Mengen (sets) und "gleichheitszeichen" {{{
+  s({ trig = 'forall', snippetType = 'autosnippet' }, { t '\\forall' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = 'exists', snippetType = 'autosnippet' }, { t '\\exists' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = 'inn', snippetType = 'autosnippet' }, { t '\\in' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = 'to', snippetType = 'autosnippet' }, { t '\\to' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = '->', snippetType = 'autosnippet' }, { t '\\to' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = '=>', snippetType = 'autosnippet' }, { t '\\implies' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = '<=', snippetType = 'autosnippet' }, { t '\\leq' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = '>=', snippetType = 'autosnippet' }, { t '\\geq' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = 'iff', snippetType = 'autosnippet' }, { t '\\iff' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = 'set', snippetType = 'autosnippet' }, { t '\\{', d(1, get_visual), t '\\}' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = '===', snippetType = 'autosnippet' }, { t '\\equiv' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = '\\\\\\', snippetType = 'autosnippet' }, { t '\\setminus' }, { condition = tex_utils.in_mathzone }),
+
+  s({ trig = 'underline', desc = 'underline' }, fmta('\\underline{<>}', { d(1, get_visual) })),
+  s({ trig = 'overline', desc = 'overline' }, fmta('\\overline{<>}', { d(1, get_visual) })),
+  s({ trig = 'underset', desc = 'underset' }, fmta('\\underset{<>}{<>}', { i(1), d(2, get_visual) })),
+  s({ trig = 'overset', desc = 'overset' }, fmta('\\overset{<>}{<>}', { i(1), d(2, get_visual) })),
+
+  -- FZ Notation und Mengen (sets)  und "gleichheitszeichen" }}}
+
+  -- Bools{{{
+  s({ trig = 'lor', snippetType = 'autosnippet' }, { t '\\lor' }, { condition = tex_utils.in_mathzone }),
+  s({ trig = 'land', snippetType = 'autosnippet' }, { t '\\land' }, { condition = tex_utils.in_mathzone }),
+  -- }}}
+
+  -- x^{y} und x_{y} {{{
+  s({ trig = '_', desc = 'subscript', snippetType = 'autosnippet', wordTrig = false }, fmta('_{<>}', { i(1) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = '^', desc = 'hoch', snippetType = 'autosnippet', wordTrig = false }, fmta('^{<>}', { i(1) }), { condition = tex_utils.in_mathzone }),
+  -- x^{y} und x_{y} }}}
+
+  -- delimiters {{{
+  s({ trig = 'lr()', snippetType = 'autosnippet' }, fmta('\\left(  <>\\right)', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = 'lr[]', snippetType = 'autosnippet' }, fmta('\\left[  <>\\right]', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = 'lr{}', snippetType = 'autosnippet' }, fmta('\\left{  <>\\right}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = 'lr|', snippetType = 'autosnippet' }, fmta('\\left|  <>\\right|', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = 'ceil', snippetType = 'autosnippet' }, fmta('\\lceil  <>\\rceil', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = 'floor', snippetType = 'autosnippet' }, fmta('\\lfloor  <>\\rfloor', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  --  delimiters }}}
+
   -- In Math mode }}}
 
+  -- autosnippets {{{
   -- In text {{{
   --
-  -- fonts {{{
-
-  s({ trig = 'bf', desc = 'bold font' }, fmta('\\textbf{<>}', { d(1, get_visual) })),
-
-  s({ trig = 'it', desc = 'italics' }, fmta('\\textit{<>}', { d(1, get_visual) })),
-
-  s({ trig = 'tt', desc = 'teletype (monospace font)' }, fmta('\\texttt{<>}', { d(1, get_visual) })),
-  -- fonts }}}
 
   -- In text }}}
-
   -- autosnippet }}}
 
   -- begin / end environments {{{
@@ -218,6 +264,24 @@ return {
   ),
   -- enumerate begin / end environment }}}
 
+  -- description environment{{{
+  s(
+    { trig = 'description', desc = [[
+  \begin{description}
+    \item[<>] <>
+  \end{description}
+  ]] },
+    fmta(
+      [[
+      \begin{description}
+        \item[<>] <>
+      \end{description}
+      ]],
+      { i(1), i(2) }
+    )
+  ),
+  -- description}}}
+
   -- equation begin /end environment {{{
   s(
     { trig = 'equation', desc = [[
@@ -255,6 +319,40 @@ return {
   ),
   -- end{split} }}}
 
+  -- begin{align} {{{
+  s(
+    { trig = 'align', desc = [[
+  \begin{align*}
+    <>
+  \end{align*}
+  ]] },
+    fmta(
+      [[
+  \begin{align*}
+    <>
+  \end{align*}
+  ]],
+      d(1, get_visual)
+    )
+  ),
+
+  s(
+    { trig = 'alignat', desc = [[
+  \begin{alignat*}
+    <>
+  \end{alignat*}
+  ]] },
+    fmta(
+      [[
+  \begin{alignat*}{<>}
+    <>
+  \end{alignat*}
+  ]],
+      { i(1, 'num of collumns'), d(2, get_visual) }
+    )
+  ),
+  -- end{align} }}}
+
   -- other language {{{
   s(
     { trig = 'other language', desc = 'use rules for a different language' },
@@ -271,6 +369,20 @@ return {
     )
   ),
   -- other language }}}
+
+  -- begin{listings} {{{
+  s(
+    { trig = 'listings', desc = 'Code Environment/Code Block' },
+    fmta(
+      [[
+  \begin{listings}
+    <>
+  \end{listings}
+  ]],
+      d(1, get_visual)
+    )
+  ),
+  -- end{listings} }}}
 
   -- begin / end environments }}}
 
@@ -289,4 +401,47 @@ return {
     { condition = tex_utils.in_text }
   ),
   -- create math environment }}}
+
+  -- section {{{
+  s({ trig = 'section', desc = 'section' }, fmta('\\section{<>}', { i(1) })),
+  s({ trig = 'subsection', desc = 'subsection' }, fmta('\\subsection{<>}', { i(1) })),
+  s({ trig = 'subsubsection', desc = 'subsubsection' }, fmta('\\subsubsection{<>}', { i(1) })),
+
+  -- section }}}
+
+  -- fonts {{{
+
+  s({ trig = 'textbf', desc = 'bold font' }, fmta('\\textbf{<>}', { d(1, get_visual) })),
+
+  s({ trig = 'textit', desc = 'italics' }, fmta('\\textit{<>}', { d(1, get_visual) })),
+
+  s({ trig = 'texttt', desc = 'teletype (monospace font)' }, fmta('\\texttt{<>}', { d(1, get_visual) })),
+
+  s({ trig = 'emph', desc = 'emphasize' }, fmta('\\emph{<>}', { d(1, get_visual) })),
+
+  s({ trig = 'large', desc = 'text size' }, fmta('{\\large <>}', { d(1, get_visual) })),
+
+  s({ trig = 'Large', desc = 'text size' }, fmta('{\\Large <>}', { d(1, get_visual) })),
+
+  s({ trig = 'LARGE', desc = 'text size' }, fmta('{\\LARGE <>}', { d(1, get_visual) })),
+
+  s({ trig = 'huge', desc = 'text size' }, fmta('{\\huge <>}', { d(1, get_visual) })),
+
+  s({ trig = 'Huge', desc = 'text size' }, fmta('{\\Huge <>}', { d(1, get_visual) })),
+
+  s({ trig = 'normalsize', desc = 'text size' }, fmta('{\\normalsize <>}', { d(1, get_visual) })),
+
+  -- fonts }}}
+
+  -- formatting {{{
+  s({ trig = 'smallskip', desc = 'vertical spacing' }, { t '\\smallskip' }),
+  s({ trig = 'medskip', desc = 'vertical spacing' }, { t '\\medskip' }),
+  s({ trig = 'bigskip', desc = 'vertical spacing' }, { t '\\bigskip' }),
+  s({ trig = 'noindent', desc = 'prevent indenting' }, { t '\\noindent' }),
+  -- }}}
+
+  s({ trig = 'hrule', desc = 'horizontal line' }, { t '\\hrule' }),
+  s({ trig = 'hline', desc = 'horizontal line' }, { t '\\hline' }),
+
+  s({ trig = 'footnote', desc = 'footnote' }, fmta('\\footnote{<>}', { d(1, get_visual) })),
 }

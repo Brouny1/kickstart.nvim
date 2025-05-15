@@ -1,3 +1,4 @@
+-- vim:foldmethod=marker
 -- You can add your own plugins here or in other files in this directory!
 --  I promise not to create any merge conflicts in this directory :)
 --
@@ -48,7 +49,7 @@ return {
       vim.g.vimtex_view_method = 'zathura'
       vim.g.vimtex_imaps_enabled = false
       vim.opt.conceallevel = 2
-      vim.g.vimtex_syntax_conceal = { math_bounds = 0 }
+      -- vim.g.vimtex_syntax_conceal = { math_bounds = 0 }
     end,
   },
   -- }}}

@@ -99,7 +99,7 @@ return {
 
   -- frac{}{} and sqrt[n]{} {{{
   s({ trig = 'ff', snippetType = 'autosnippet' }, { t '\\frac{', d(1, get_visual), t '}{', i(2), t '}' }, { condition = tex_utils.in_mathzone }),
-  s({ trig = 'sq', snippetType = 'autosnippet' }, fmta('\\sqrt[<>]{<>}', { i(1, 'n'), d(2, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = 'sq', snippetType = 'autosnippet' }, fmta('\\sqrt{<>}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   -- frac{}{} and sqrt[n]{} }}}
 
   -- Funktionen {{{
@@ -107,6 +107,8 @@ return {
   s({ trig = 'sin', desc = 'sin', snippetType = 'autosnippet' }, fmta('\\sin(<>)', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   s({ trig = 'cos', desc = 'cos', snippetType = 'autosnippet' }, fmta('\\cos(<>)', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   s({ trig = 'log', desc = 'log', snippetType = 'autosnippet' }, fmta('\\log(<>)', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = 'sum', snippetType = 'autosnippet' }, { t '\\sum' }, { condition = tex_utils.in_mathzone }),
+
   -- Funktionen}}}
 
   -- \text{} {{{
@@ -139,9 +141,9 @@ return {
   s({ trig = '...', snippetType = 'autosnippet' }, { t '\\dots' }, { condition = tex_utils.in_mathzone }),
   -- dots }}}
 
-  -- cdots{{{
+  -- cdot{{{
   s({ trig = 'cdot', snippetType = 'autosnippet' }, { t '\\cdot' }, { condition = tex_utils.in_mathzone }),
-  -- cdots}}}
+  -- cdot}}}
 
   -- FZ Notation und Mengen (sets) und "gleichheitszeichen" {{{
   s({ trig = 'forall', snippetType = 'autosnippet' }, { t '\\forall' }, { condition = tex_utils.in_mathzone }),
@@ -157,10 +159,25 @@ return {
   s({ trig = '===', snippetType = 'autosnippet' }, { t '\\equiv' }, { condition = tex_utils.in_mathzone }),
   s({ trig = '\\\\\\', snippetType = 'autosnippet' }, { t '\\setminus' }, { condition = tex_utils.in_mathzone }),
 
+  s({ trig = 'infty', desc = 'infinity' }, { t '\\infty' }),
+
   s({ trig = 'underline', desc = 'underline' }, fmta('\\underline{<>}', { d(1, get_visual) })),
   s({ trig = 'overline', desc = 'overline' }, fmta('\\overline{<>}', { d(1, get_visual) })),
   s({ trig = 'underset', desc = 'underset' }, fmta('\\underset{<>}{<>}', { i(1), d(2, get_visual) })),
   s({ trig = 'overset', desc = 'overset' }, fmta('\\overset{<>}{<>}', { i(1), d(2, get_visual) })),
+
+  s({ trig = 'uline', desc = 'uline' }, fmta('\\uline{<>}', { d(1, get_visual) })),
+  s({ trig = 'uuline', desc = 'dubble underline' }, fmta('\\uuline{<>}', { d(1, get_visual) })),
+  s({ trig = 'uwave', desc = 'uwave' }, fmta('\\uwave{<>}', { d(1, get_visual) })),
+  s({ trig = 'dashuline', desc = 'dashuline' }, fmta('\\dashuline{<>}', { d(1, get_visual) })),
+  s({ trig = 'dotuline', desc = 'dotuline' }, fmta('\\dotuline{<>}', { d(1, get_visual) })),
+
+  s({ trig = 'overrightarrow', desc = 'arrow' }, fmta('\\overrightarrow{<>}', { d(1, get_visual) })),
+  s({ trig = 'underrightarrow', desc = 'arrow' }, fmta('\\underrightarrow{<>}', { d(1, get_visual) })),
+  s({ trig = 'overleftarrow', desc = 'arrow' }, fmta('\\overleftarrow{<>}', { d(1, get_visual) })),
+  s({ trig = 'underleftarrow', desc = 'arrow' }, fmta('\\underleftarrow{<>}', { d(1, get_visual) })),
+
+  s({ trig = 'vec', snippetType = 'autosnippet' }, fmta('\\vec{<>}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
 
   -- FZ Notation und Mengen (sets)  und "gleichheitszeichen" }}}
 
@@ -372,12 +389,12 @@ return {
 
   -- begin{listings} {{{
   s(
-    { trig = 'listings', desc = 'Code Environment/Code Block' },
+    { trig = 'lstlisting', desc = 'Code Environment/Code Block' },
     fmta(
       [[
-  \begin{listings}
+  \begin{lstlisting}
     <>
-  \end{listings}
+  \end{lstlisting}
   ]],
       d(1, get_visual)
     )

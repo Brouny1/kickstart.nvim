@@ -20,6 +20,13 @@ return {
     ft = { 'scala', 'sbt', 'java' },
     opts = function()
       local metals_config = require('metals').bare_config()
+
+      -- "off" will enable LSP progress notifications by Metals and you'll need
+      -- to ensure you have a plugin like fidget.nvim installed to handle them.
+      metals_config.init_options.statusBarProvider = 'off'
+
+      metals_config.capabilities = require('blink.cmp').get_lsp_capabilities()
+
       metals_config.on_attach = function(client, bufnr)
         -- your on_attach function
       end

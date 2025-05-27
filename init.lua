@@ -846,7 +846,7 @@ require('lazy').setup({
           --   end,
           -- },
         },
-        opts = { enable_autosnippets = true, store_selection_keys = '<Tab>' },
+        --opts = {},
       },
       'folke/lazydev.nvim',
     },

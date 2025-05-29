@@ -847,7 +847,26 @@ require('lazy').setup({
             end,
           },
         },
-        opts = { enable_autosnippets = true, store_selection_keys = '<Tab>' },
+
+        config = function()
+          local ls = require 'luasnip'
+          ls.config.set_config { enable_autosnippets = true, store_selection_keys = '<Tab>' }
+
+          -- helper functions
+          local function jumpr()
+            return function()
+              ls.jump(1)
+            end
+          end
+          local function jumpl()
+            return function()
+              ls.jump(-1)
+            end
+          end
+
+          vim.keymap.set({ 'i', 'v' }, '<C-l>', jumpr(), { desc = 'Jump right in snippet' })
+          vim.keymap.set({ 'i', 'v' }, '<C-h>', jumpl(), { desc = 'Jump left in snippet' })
+        end,
       },
       'folke/lazydev.nvim',
     },

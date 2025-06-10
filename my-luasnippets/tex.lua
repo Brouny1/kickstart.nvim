@@ -178,6 +178,7 @@ return {
   s({ trig = 'underleftarrow', desc = 'arrow' }, fmta('\\underleftarrow{<>}', { d(1, get_visual) })),
 
   s({ trig = 'vec', snippetType = 'autosnippet' }, fmta('\\vec{<>}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = 'colvec', snippetType = 'autosnippet' }, fmta('\\colvec{<>}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
 
   -- FZ Notation und Mengen (sets)  und "gleichheitszeichen" }}}
 
@@ -194,7 +195,7 @@ return {
   -- delimiters {{{
   s({ trig = 'lr()', snippetType = 'autosnippet' }, fmta('\\left(  <>\\right)', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   s({ trig = 'lr[]', snippetType = 'autosnippet' }, fmta('\\left[  <>\\right]', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
-  s({ trig = 'lr{}', snippetType = 'autosnippet' }, fmta('\\left{  <>\\right}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = 'lr{}', snippetType = 'autosnippet' }, fmta('\\left\\{  <>\\right\\}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   s({ trig = 'lr|', snippetType = 'autosnippet' }, fmta('\\left|  <>\\right|', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   s({ trig = 'ceil', snippetType = 'autosnippet' }, fmta('\\lceil  <>\\rceil', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   s({ trig = 'floor', snippetType = 'autosnippet' }, fmta('\\lfloor  <>\\rfloor', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
@@ -272,11 +273,11 @@ return {
   ]] },
     fmta(
       [[
-      \begin{enumerate}
+      \begin{enumerate}<>
         \item <>
       \end{enumerate}
       ]],
-      d(1, get_visual)
+      { i(1), d(2, get_visual) }
     )
   ),
   -- enumerate begin / end environment }}}

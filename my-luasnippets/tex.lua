@@ -462,4 +462,6 @@ return {
   s({ trig = 'hline', desc = 'horizontal line' }, { t '\\hline' }),
 
   s({ trig = 'footnote', desc = 'footnote' }, fmta('\\footnote{<>}', { d(1, get_visual) })),
+
+  s({ trig = 'Lightning', desc = 'Lightning/Contradiction' }, { t '\\Lightning' }),
 }

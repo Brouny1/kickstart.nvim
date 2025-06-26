@@ -25,7 +25,7 @@ return {
       -- to ensure you have a plugin like fidget.nvim installed to handle them.
       metals_config.init_options.statusBarProvider = 'off'
 
-      metals_config.capabilities = require('blink.cmp').get_lsp_capabilities()
+      -- metals_config.capabilities = require('blink.cmp').get_lsp_capabilities()
 
       metals_config.on_attach = function(client, bufnr)
         -- your on_attach function
@@ -40,6 +40,7 @@ return {
         callback = function()
           require('metals').initialize_or_attach(metals_config)
         end,
+
         group = nvim_metals_group,
       })
     end,

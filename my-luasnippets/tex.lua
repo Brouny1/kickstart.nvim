@@ -196,10 +196,15 @@ return {
   s({ trig = 'lr()', snippetType = 'autosnippet' }, fmta('\\left(  <>\\right)', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   s({ trig = 'lr[]', snippetType = 'autosnippet' }, fmta('\\left[  <>\\right]', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   s({ trig = 'lr{}', snippetType = 'autosnippet' }, fmta('\\left\\{  <>\\right\\}', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
-  s({ trig = 'lr|', snippetType = 'autosnippet' }, fmta('\\left|  <>\\right|', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
+  s({ trig = 'lr|', snippetType = 'autosnippet' }, fmta('\\left| <> \\right|', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   s({ trig = 'ceil', snippetType = 'autosnippet' }, fmta('\\lceil  <>\\rceil', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   s({ trig = 'floor', snippetType = 'autosnippet' }, fmta('\\lfloor  <>\\rfloor', { d(1, get_visual) }), { condition = tex_utils.in_mathzone }),
   --  delimiters }}}
+
+  -- Greek {{{
+  s({ trig = 'alpha', desc = 'alpha' }, { t '\\alpha' }),
+  s({ trig = 'lambda', desc = 'lambda' }, { t '\\lambda' }),
+  --Greek}}}
 
   -- In Math mode }}}
 

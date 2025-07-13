@@ -734,6 +734,15 @@ require('lazy').setup({
             },
           },
         },
+        tinymist = {},
+      }
+
+      require('lspconfig')['tinymist'].setup {
+        settings = {
+          formatterMode = 'typstyle',
+          -- exportPdf = 'onType',
+          -- exportPdf = 'onSave',
+        },
       }
 
       -- Ensure the servers and tools above are installed

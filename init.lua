@@ -181,7 +181,7 @@ vim.opt.spell = true
 
 -- modeline
 -- is on by default, but not for root. Might be a security issue.
-vim.opt.modeline = true
+-- vim.opt.modeline = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`

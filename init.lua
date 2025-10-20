@@ -737,13 +737,15 @@ require('lazy').setup({
         tinymist = {},
       }
 
-      require('lspconfig')['tinymist'].setup {
-        settings = {
-          formatterMode = 'typstyle',
-          -- exportPdf = 'onType',
-          -- exportPdf = 'onSave',
-        },
-      }
+      -- require('lspconfig')['tinymist'].setup {
+      --   settings = {
+      --     formatterMode = 'typstyle',
+      --     -- exportPdf = 'onType',
+      --     -- exportPdf = 'onSave',
+      --   },
+      -- }
+
+      vim.lsp.config('tinymist', { settings = { formatterMode = 'typstyle' } })
 
       -- Ensure the servers and tools above are installed
       --
@@ -774,7 +776,8 @@ require('lazy').setup({
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
+            -- require('lspconfig')[server_name].setup(server) -- outdated and replaced by below line
+            vim.lsp.config(server_name, server)
           end,
         },
       }
@@ -905,7 +908,7 @@ require('lazy').setup({
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
         preset = 'default',
-        ['<Tab>'] = {}, -- to stop jumping to last snippet, when pressing tab. ei. to stop overloading the functionality of the tab key.
+        ['<TAB>'] = {}, -- to stop jumping to last snippet, when pressing tab. ei. to stop overloading the functionality of the tab key.
         ['<S-Tab>'] = {},
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps

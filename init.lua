@@ -119,9 +119,9 @@ vim.o.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
-end)
+--vim.schedule(function()
+-- vim.o.clipboard = 'unnamedplus'
+-- end)
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -175,6 +175,11 @@ vim.o.scrolloff = 10
 vim.opt.spelllang = 'en_us,de_de'
 vim.opt.spell = true
 
+vim.o.tabstop = 4 -- A TAB character looks like 4 spaces
+vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a TAB character
+vim.o.softtabstop = 4 -- Number of spaces inserted instead of a TAB character
+vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
+
 -- folding
 -- note needed, because i can add "vim:foldmethod=marker" to start of document
 -- vim.opt.foldmethod = 'marker'
@@ -185,10 +190,6 @@ vim.opt.spell = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
-
--- My own keymaps
--- open Neotree
-vim.keymap.set('n', '<leader>o', '<cmd>Neotree<CR>', { desc = '[O]pen NeoTree' })
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
@@ -273,7 +274,7 @@ require('lazy').setup({
   --
   --
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+  { 'NMAC427/guess-indent.nvim', opts = {} }, -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -825,6 +826,8 @@ require('lazy').setup({
 
         c = { 'clang-format' },
         tex = { 'tex-fmt' },
+        asm = { 'nasmfmt' },
+        -- html = { 'superhtml' },
       },
     },
   },

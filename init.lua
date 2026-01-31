@@ -826,8 +826,9 @@ require('lazy').setup({
 
         c = { 'clang-format' },
         tex = { 'tex-fmt' },
-        asm = { 'nasmfmt' },
-        -- html = { 'superhtml' },
+        asm = { 'asmfmt' },
+        html = { 'prettier' },
+        css = { 'prettier' },
       },
     },
   },

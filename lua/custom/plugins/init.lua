@@ -7,8 +7,13 @@
 return {
   -- Does what it says.
   { 'tzachar/highlight-undo.nvim', opts = {} },
-  -- great rust tool
-  { 'simrat39/rust-tools.nvim', ft = { 'rust' }, opts = {} },
+  -- great rust tool (depricated)
+  -- { 'simrat39/rust-tools.nvim', ft = { 'rust' }, opts = {} },
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^8', -- Recommended
+    lazy = false, -- This plugin is already lazy
+  },
 
   -- Scala Metals {{{
   -- Scala metals start
@@ -37,9 +42,7 @@ return {
       local nvim_metals_group = vim.api.nvim_create_augroup('nvim-metals', { clear = true })
       vim.api.nvim_create_autocmd('FileType', {
         pattern = self.ft,
-        callback = function()
-          require('metals').initialize_or_attach(metals_config)
-        end,
+        callback = function() require('metals').initialize_or_attach(metals_config) end,
 
         group = nvim_metals_group,
       })
@@ -109,17 +112,13 @@ return {
       -- This function will be called to determine the root of the typst project
       get_root = function(path_of_main_file)
         local root = os.getenv 'TYPST_ROOT'
-        if root then
-          return root
-        end
+        if root then return root end
         return vim.fn.fnamemodify(path_of_main_file, ':p:h')
       end,
 
       -- This function will be called to determine the main file of the typst
       -- project.
-      get_main_file = function(path_of_buffer)
-        return path_of_buffer
-      end,
+      get_main_file = function(path_of_buffer) return path_of_buffer end,
     }, -- lazy.nvim will implicitly calls `setup {}`
   },
 

@@ -665,7 +665,6 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
-        rust_analyzer = {},
         nil_ls = {},
         clangd = {},
 
@@ -722,6 +721,10 @@ require('lazy').setup({
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+      -- added this late, so it is not installed by mason:
+      servers.ts_ls = {}
+      -- servers.rust_analyzer = {}
 
       for name, server in pairs(servers) do
         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
@@ -800,6 +803,8 @@ require('lazy').setup({
         asm = { 'asmfmt' },
         html = { 'prettier' },
         css = { 'prettier' },
+        vue = { 'prettier' },
+        javascript = { 'prettier' },
       },
     },
   },
@@ -998,7 +1003,7 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',

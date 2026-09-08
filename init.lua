@@ -665,7 +665,7 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
-        nil_ls = {},
+        -- nil_ls = {},
         clangd = {},
 
         pylsp = {},
@@ -724,6 +724,20 @@ require('lazy').setup({
 
       -- added this late, so it is not installed by mason:
       servers.ts_ls = {}
+      servers.nil_ls = {}
+      servers.golangci_lint_ls = {
+        init_options = {
+          command = {
+            'golangci-lint',
+            'run',
+            '--output.json.path',
+            'stdout',
+            '--show-stats=false',
+            '--issues-exit-code=1',
+          },
+        },
+      }
+      servers.gopls = {}
       -- servers.rust_analyzer = {}
 
       for name, server in pairs(servers) do
@@ -805,6 +819,7 @@ require('lazy').setup({
         css = { 'prettier' },
         vue = { 'prettier' },
         javascript = { 'prettier' },
+        -- go = { 'golangci-lint' },
       },
     },
   },
